@@ -22,6 +22,7 @@ public class HBaseDaoImpl {
 		config.set("hbase.zookeeper.quorum", hbaseIp);
 		try {
 			conn = ConnectionFactory.createConnection(config);
+			System.out.println(conn);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -34,13 +35,18 @@ public class HBaseDaoImpl {
 	 */
 	public  void createTable(String[] args){
 		System.out.println("start create table....");
-        Admin hBaseAdmin = null;
+		Admin hBaseAdmin = null;
 		try {
-			if(hBaseAdmin.tableExists(tableName)){
-				hBaseAdmin.disableTable(tableName);
-				hBaseAdmin.deleteTable(tableName);
-				System.out.println(tableName.toString()+"is exist,delete....");
-			}
+			hBaseAdmin = conn.getAdmin();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+//			if(hBaseAdmin.tableExists(tableName)){
+//				hBaseAdmin.disableTable(tableName);
+//				hBaseAdmin.deleteTable(tableName);
+//				System.out.println(tableName.toString()+"is exist,delete....");
+//			}
 			HTableDescriptor tableDescriptor=new HTableDescriptor(tableName);
 			for(int i=0;i<args.length;i++){
 				tableDescriptor.addFamily(new HColumnDescriptor(args[i]));
@@ -216,10 +222,11 @@ public class HBaseDaoImpl {
 
 	public static void main(String[] args) {
 		HBaseDaoImpl hBaseDao=new HBaseDaoImpl();
-		HTML html1=new HTML("poem test hhh wang","a description keep test",new Date(),"I just test this project!".getBytes(),"www.baidu.com");
-		HTML html2=new HTML("title xiang yulin","I do not know",new Date(),"Kaipeng wang is a gay!He loves men!".getBytes(),"www.hao123.com");
-		hBaseDao.insertData(html1);
-		hBaseDao.insertData(html2);
+//		HTML html1=new HTML("poem test hhh wang test","a description keep test",new Date(),"I just test this project!".getBytes(),"www.baidu.com");
+//		HTML html2=new HTML("title xiang yulin yyyy","I do not know",new Date(),"Kaipeng wang is a gay!He loves men!".getBytes(),"www.hao123.com");
+//		hBaseDao.insertData(html1);
+//		hBaseDao.insertData(html2);
+		hBaseDao.createTable(new String[]{"testliuqi"});
 
 	}
 }

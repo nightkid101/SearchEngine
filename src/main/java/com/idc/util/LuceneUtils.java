@@ -17,7 +17,7 @@ public class LuceneUtils {
 	
 	static{
 		try {
-			directory=FSDirectory.open(new File("C:\\Users\\Loring\\Desktop\\code\\SearchEngine\\indexDirectory"));
+			directory=FSDirectory.open(new File("~/SearchEngine/indexDirectory"));
 //			analyzer=new IKAnalyzer();// 中文分词器
 			analyzer=new SimpleAnalyzer();// 英文分词器
 		} catch (IOException e) {
